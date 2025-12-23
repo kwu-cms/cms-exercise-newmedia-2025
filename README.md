@@ -1,151 +1,125 @@
 # メディア表現発展演習Ⅰ - 課題提出データ表示ページ
 
-Notion APIを使用して、課題提出データを取得・表示するWebアプリケーションです。
+GitHub Pagesで公開する静的Webアプリケーションです。学生の課題作品をギャラリー形式で表示します。
 
 ## 機能
 
-- 課題A（画像）と課題B（テキスト）を1ページに表示
-- 学籍番号・氏名での検索機能（デバウンス付き）
-- グループ（A/B/C）でのフィルタリング
-- 画像の拡大表示（クリックでモーダル表示、ESCキーで閉じる）
+- 課題作品のギャラリー表示（Masonryレイアウト）
+- マルチタグ検索機能（分類別カラーリング）
+- 無限スクロール対応
+- 画像のLazy Loading
+- 詳細ビュー（作品の詳細情報とレポート表示）
 - レスポンシブデザイン対応
+- コンパクトヘッダー（スクロール時に自動切り替え）
 
-## モダンな実装
+## 技術スタック
 
-### パフォーマンス最適化
-
-- **Lazy Loading**: Intersection Observer APIを使用した画像の遅延読み込み
-- **デバウンス**: 検索入力のデバウンス処理（300ms）でAPI呼び出しを最適化
-- **仮想DOM風のレンダリング**: DocumentFragmentを使用した効率的なDOM操作
-- **CSS最適化**: `will-change`と`contain`プロパティによるレンダリング最適化
-
-### モダンなJavaScript
-
-- ES6+構文（アロー関数、async/await、テンプレートリテラル）
-- Intersection Observer APIによるLazy Loading
-- イベントデリゲーションとモダンなイベントハンドリング
-- エラーハンドリングの改善
-
-### アクセシビリティ
-
-- 適切なARIAラベル
-- キーボードナビゲーション対応（ESCキーでモーダルを閉じる）
-- スクリーンリーダー対応
-- セマンティックHTML
-
-### UX改善
-
-- 画像読み込み中のプレースホルダー表示
-- スムーズなアニメーションとトランジション
-- ローディング状態の視覚的フィードバック
-- エラー状態の適切な表示
-
-## セットアップ
-
-### 1. 依存関係のインストール
-
-```bash
-npm install
-```
-
-### 2. 環境変数の設定
-
-プロジェクトルートに `.env` ファイルを作成し、以下の内容を記述してください：
-
-```
-```
-
-### 3. サーバーの起動
-
-```bash
-npm start
-```
-
-開発モード（ファイル変更を自動検知）：
-
-```bash
-npm run dev
-```
-
-### 4. ブラウザでアクセス
-
-<http://localhost:3000> にアクセスしてください。
+- **フロントエンド**: HTML5, CSS3, JavaScript (ES6+)
+- **ホスティング**: GitHub Pages
+- **データ形式**: JSON（静的ファイル）
 
 ## プロジェクト構造
 
-```
+```text
 プロジェクトルート/
-├── server/
-│   ├── index.js      # Expressサーバー
-│   └── notion.js     # Notion APIクライアント
 ├── public/
-│   ├── index.html    # メインページ
+│   ├── index.html          # メインページ
 │   ├── css/
-│   │   └── style.css # スタイルシート
-│   └── js/
-│       └── app.js    # フロントエンドJavaScript
-├── .env              # 環境変数（要作成）
+│   │   └── style.css      # スタイルシート
+│   ├── js/
+│   │   └── app.js         # フロントエンドJavaScript
+│   ├── data/
+│   │   └── assignments.json  # 課題データ（JSON）
+│   └── images/            # 課題画像
 ├── .gitignore
 ├── package.json
 └── README.md
 ```
 
-## Notion APIの設定
-
-1. [Notion Integrations](https://www.notion.so/my-integrations) にアクセス
-2. 新しい統合を作成
-3. APIキーを取得
-4. データベースに統合を接続（データベースの右上の「...」→「接続」→統合を選択）
-
-## データベース構造
-
-以下のプロパティが必要です：
-
-- **Aa 名前**: タイトル型（学籍番号）
-- **課題A**: ファイル型（画像）
-- **課題B-1**: リッチテキスト型（レポート1部）
-- **課題B-2**: リッチテキスト型（レポート2部）
-- **グループ**: セレクト型（Aグループ/Bグループ/Cグループ）- オプション
-- **氏名**: リッチテキスト型 - オプション
-
-## 注意事項
-
-- `.env` ファイルはGitにコミットしないでください（`.gitignore`に含まれています）
-- Notion APIキーは機密情報です。公開リポジトリには含めないでください
-- データベースへのアクセス権限が統合に付与されていることを確認してください
-
-## トラブルシューティング
-
-### データが表示されない場合
-
-1. `.env` ファイルが正しく作成されているか確認
-2. Notion APIキーが正しいか確認
-3. データベースIDが正しいか確認
-4. データベースに統合が接続されているか確認
-5. サーバーのコンソールでエラーメッセージを確認
-
-### CORSエラーが発生する場合
-
-`server/index.js` でCORSが有効になっていることを確認してください。
-
 ## GitHub Pagesでの公開
 
-このプロジェクトをGitHub Pagesで公開する方法については、[GITHUB_PAGES_SETUP.md](./GITHUB_PAGES_SETUP.md)を参照してください。
+### セットアップ手順
 
-### クイックスタート
+1. **リポジトリをGitHubにプッシュ**
 
-1. GitHubリポジトリを作成
-2. コードをプッシュ
-3. GitHub Pagesの設定で「Deploy from a branch」を選択し、`main`ブランチの`/public`フォルダを指定
-4. または、GitHub Actionsを使用する場合は、`.github/workflows/deploy.yml`が自動的にデプロイします
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
+   git branch -M main
+   git push -u origin main
+   ```
 
-**注意**: GitHub Pagesは静的ファイルのみをホストするため、APIエンドポイント（`/api/assignments`）は別のサーバー（Vercel、Netlify等）でホストする必要があります。
+2. **GitHub Pagesの有効化**
+   - GitHubリポジトリの「Settings」→「Pages」に移動
+   - 「Source」で「Deploy from a branch」を選択
+   - 「Branch」で「main」を選択
+   - 「Folder」で「/ (root)」を選択
+   - 「Save」をクリック
 
-APIを別のサーバーでホストする場合、`public/config.js`でAPIベースURLを設定してください：
+3. **サイトの確認**
 
-```javascript
-window.API_BASE_URL = 'https://your-api-server.vercel.app';
+   数分後、以下のURLでサイトにアクセスできます：
+
+   ```text
+   https://YOUR_USERNAME.github.io/YOUR_REPOSITORY_NAME/
+   ```
+
+### データの更新
+
+`public/data/assignments.json`ファイルを編集してコミット・プッシュすると、自動的にサイトが更新されます。
+
+画像ファイルは`public/images/`フォルダに配置してください。
+
+## ローカル開発
+
+### 静的ファイルサーバーで確認
+
+```bash
+# publicフォルダに移動
+cd public
+
+# PythonのHTTPサーバーを使用
+python3 -m http.server 8000
+
+# または、npx serveを使用
+npx serve .
 ```
+
+ブラウザで `http://localhost:8000` にアクセスしてください。
+
+## 機能詳細
+
+### タグ検索機能
+
+- **分類別カラーリング**: タグは4つの分類に分かれて色分けされています
+  - **生成手法**（ブルー）: ジェネラティブ、確率的、パターン
+  - **データタイプ**（グリーン）: 時系列、データ可視化、生活データ
+  - **表現要素**（オレンジ）: 幾何学、記号・文字、線、点、色彩
+  - **空間・配置**（パープル）: 空間配置、関係性、スケーリング、順序性
+
+- **マルチタグ検索**: 複数のタグを選択してAND検索が可能
+
+### パフォーマンス最適化
+
+- **Lazy Loading**: Intersection Observer APIを使用した画像の遅延読み込み
+- **無限スクロール**: 30件ずつ自動読み込み
+- **CSS最適化**: `will-change`と`contain`プロパティによるレンダリング最適化
+
+### アクセシビリティ
+
+- 適切なARIAラベル
+- キーボードナビゲーション対応
+- スクリーンリーダー対応
+- セマンティックHTML
+
+## ブラウザサポート
+
+- Chrome（最新版）
+- Firefox（最新版）
+- Safari（最新版）
+- Edge（最新版）
 
 ## ライセンス
 

@@ -1,21 +1,12 @@
 {
-  "name": "notion-assignment-viewer",
+  "name": "media-expression-assignment-viewer",
   "version": "1.0.0",
-  "description": "Notion APIを使用して課題提出データを表示するWebアプリケーション",
-  "main": "server/index.js",
+  "description": "メディア表現発展演習Ⅰの課題提出データを表示する静的Webアプリケーション",
   "type": "module",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "node --watch server/index.js"
+    "serve": "cd public && python3 -m http.server 8000"
   },
-  "keywords": ["notion", "api", "assignment"],
+  "keywords": ["assignment", "gallery", "static-site"],
   "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "@notionhq/client": "^2.2.15",
-    "express": "^4.18.2",
-    "dotenv": "^16.3.1",
-    "cors": "^2.8.5"
-  }
+  "license": "MIT"
 }
-

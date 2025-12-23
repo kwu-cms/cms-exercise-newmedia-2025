@@ -13,14 +13,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <!-- プリコネクトでパフォーマンス最適化 -->
-    <link rel="preconnect" href="https://www.notion.so">
-    <!-- API設定 -->
-    <script src="config.js"></script>
 </head>
 
 <body>
-    <div class="header-overview-card">
+    <!-- フルヘッダー（初期表示） -->
+    <div class="header-overview-card" id="fullHeader">
         <div class="container">
             <header>
                 <h1>メディア表現発展演習Ⅰ</h1>
@@ -41,6 +38,44 @@
             </section>
         </div>
     </div>
+
+    <!-- コンパクトヘッダー（スクロール時表示） -->
+    <div class="compact-header" id="compactHeader">
+        <div class="compact-header-content">
+            <div class="compact-header-title">
+                <h1>メディア表現発展演習Ⅰ</h1>
+                <span class="compact-header-subtitle">ルールに基づいてペンで絵を描く</span>
+            </div>
+            <button class="hamburger-menu" id="hamburgerMenu" aria-label="メニューを開く">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ハンバーガーメニューのドロワー -->
+    <div class="header-drawer" id="headerDrawer">
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h2>メディア表現発展演習Ⅰ</h2>
+                <button class="drawer-close" id="drawerClose" aria-label="メニューを閉じる">×</button>
+            </div>
+            <div class="drawer-body">
+                <div class="drawer-summary">
+                    <p>メディア表現発展演習Ⅰは学科2年次の必修科目です。課題「ルールに基づいてペンで絵を描く」は全13回の授業のうち、4回で実施しました。</p>
+                    <p>本課題は、プログラムを介したジェネラティブアートや情報可視化のようなデジタルによる表現の準備段階として設定し、プログラミング的思考やデジタルデザインにおける構造理解を目的とした基礎的な演習です。
+                    </p>
+                </div>
+                <button class="toggle-overview drawer-toggle" id="toggleOverviewDrawer" aria-label="授業の狙いを表示">
+                    <span class="toggle-text">授業の詳細</span>
+                    <span class="toggle-icon">▼</span>
+                </button>
+            </div>
+        </div>
+        <div class="drawer-overlay" id="drawerOverlay"></div>
+    </div>
+
     <div class="header-overview-spacer visible"></div>
     <div class="container">
 
@@ -77,6 +112,17 @@
 
         <div id="loading" class="loading">データを読み込んでいます...</div>
         <div id="error" class="error" style="display: none;"></div>
+
+        <!-- タグ検索フィルター -->
+        <div id="tagFilter" class="tag-filter-container" style="display: none;">
+            <div class="tag-filter-header">
+                <h3>タグで絞り込む</h3>
+                <button id="clearFilters" class="clear-filters-btn" aria-label="フィルターをクリア">クリア</button>
+            </div>
+            <div id="tagFilterList" class="tag-filter-list"></div>
+            <div id="selectedTags" class="selected-tags"></div>
+            <div id="filterResults" class="filter-results"></div>
+        </div>
 
         <!-- ギャラリービュー -->
         <div id="galleryView" class="view">
