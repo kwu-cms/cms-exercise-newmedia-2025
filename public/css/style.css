@@ -309,6 +309,12 @@ body {
     height: var(--header-height, 200px);
 }
 
+/* 詳細ビューではコンパクトヘッダーの高さに調整 */
+.header-overview-spacer.compact {
+    height: 60px;
+    /* コンパクトヘッダーの高さ */
+}
+
 header {
     text-align: center;
     color: var(--university-white);

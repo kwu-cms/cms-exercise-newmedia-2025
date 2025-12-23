@@ -652,8 +652,30 @@ const showDetailView = (assignmentId) => {
     galleryView.style.display = 'none';
     detailView.style.display = 'block';
 
-    // スクロールをトップに
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 詳細ページでは常にコンパクトヘッダーを表示（PREV/NEXT遷移時も維持）
+    const fullHeader = document.getElementById('fullHeader');
+    const compactHeader = document.getElementById('compactHeader');
+    const headerSpacer = document.querySelector('.header-overview-spacer');
+    if (fullHeader && compactHeader) {
+        // 強制的にコンパクトヘッダーを表示
+        fullHeader.classList.add('hidden');
+        compactHeader.classList.add('visible');
+        isCompactMode = true; // 詳細ページでは常にコンパクトモード
+        
+        // コンパクトヘッダーの高さに合わせてスペーサーを調整
+        if (headerSpacer) {
+            headerSpacer.classList.add('compact');
+            headerSpacer.classList.remove('visible');
+        }
+    }
+
+    // タグフィルターを非表示
+    if (tagFilterEl) {
+        tagFilterEl.style.display = 'none';
+    }
+
+    // スクロールをトップに（instantで即座に移動してヘッダー切り替えを防ぐ）
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     // URLハッシュを更新（ブラウザの戻るボタン対応）
     window.location.hash = `detail/${assignmentId}`;
@@ -710,6 +732,41 @@ const showNextDetail = () => {
 const showGalleryView = () => {
     galleryView.style.display = 'block';
     detailView.style.display = 'none';
+    
+    // ギャラリービューに戻ったら通常のヘッダー表示に戻す
+    const fullHeader = document.getElementById('fullHeader');
+    const compactHeader = document.getElementById('compactHeader');
+    const headerSpacer = document.querySelector('.header-overview-spacer');
+    if (fullHeader && compactHeader) {
+        // スクロール位置に応じてヘッダーを表示
+        const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (headerSpacer) {
+            headerSpacer.classList.remove('compact');
+        }
+        if (currentScrollTop <= scrollThreshold) {
+            fullHeader.classList.remove('hidden');
+            compactHeader.classList.remove('visible');
+            isCompactMode = false;
+            // フルヘッダーの高さに戻す
+            if (headerSpacer) {
+                headerSpacer.classList.add('visible');
+            }
+        } else {
+            fullHeader.classList.add('hidden');
+            compactHeader.classList.add('visible');
+            isCompactMode = true;
+            // コンパクトヘッダーの高さに設定
+            if (headerSpacer) {
+                headerSpacer.classList.add('compact');
+            }
+        }
+    }
+    
+    // タグフィルターを表示（ギャラリービューでは表示）
+    if (tagFilterEl && allAssignments.length > 0) {
+        tagFilterEl.style.display = 'block';
+    }
+    
     window.location.hash = '';
 };
 
@@ -752,6 +809,11 @@ const initHeaderScrollControl = () => {
     if (!fullHeader || !compactHeader) return;
 
     const handleScroll = () => {
+        // 詳細ページが表示されている場合は、スクロールイベントを無視
+        if (detailView.style.display !== 'none') {
+            return;
+        }
+
         const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
         if (currentScrollTop > scrollThreshold) {
