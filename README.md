@@ -53,8 +53,6 @@ npm install
 プロジェクトルートに `.env` ファイルを作成し、以下の内容を記述してください：
 
 ```
-NOTION_API_KEY=ntn_h3527324670H8Ke9gPMsdjT8AG74hKxHQeXJslaYvJP2R5
-NOTION_DATABASE_ID=20c0d23eb3fe8066a5fdffcc67c24e88
 ```
 
 ### 3. サーバーの起動
