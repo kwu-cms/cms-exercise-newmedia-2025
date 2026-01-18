@@ -82,6 +82,44 @@ GitHub Pagesで公開する静的Webアプリケーションです。学生の�
 
 画像ファイルは`public/images/`フォルダに配置してください。
 
+## Gitリモート設定
+
+このプロジェクトは2つのリモートリポジトリに接続されています：
+
+- **origin**: `takawo/cms-exercise-2025`（元のリポジトリ）
+- **newmedia**: `kwu-cms/cms-exercise-newmedia-2025`（新しいリポジトリ）
+
+### Personal Access Token
+
+リモートリポジトリへのプッシュには以下のPersonal Access Tokenを使用しています：
+
+
+### リモートの追加・変更
+
+新しいリモートを追加する場合：
+
+```bash
+# リモートを追加
+git remote add <remote-name> https://<TOKEN>@github.com/<USERNAME>/<REPOSITORY>.git
+
+# または既存のリモートURLを変更
+git remote set-url <remote-name> https://<TOKEN>@github.com/<USERNAME>/<REPOSITORY>.git
+```
+
+### プッシュ先の指定
+
+特定のリモートにプッシュする場合：
+
+```bash
+# newmediaリモートにプッシュ
+git push newmedia main
+
+# originリモートにプッシュ
+git push origin main
+```
+
+**注意**: Personal Access Tokenは機密情報です。`.git/config`ファイルを共有する際は注意してください。必要に応じて、Git Credential ManagerやSSH認証への切り替えを検討してください。
+
 ## 来年度のページ作成手順
 
 このテンプレートを使用して、来年度も同様の形式でページを作成できます。
